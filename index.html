@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Growify · Mi negocio</title>
+<meta name="theme-color" content="#0F1B2D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Growify">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="apple-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0F1B2D;--panel:#172640;--border:#26385A;--green:#3DDC97;--deep:#0B7A52;--orange:#FF8A5B;--cream:#F5F2EA;--muted:#9FB0CC}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#08111f;color:var(--cream);font-family:'DM Sans',system-ui,sans-serif}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+#app{height:100%;max-width:430px;margin:0 auto;background:var(--navy);display:flex;flex-direction:column;position:relative;overflow:hidden}
+@media(min-width:520px){#app{height:min(860px,94vh);margin:3vh auto;border-radius:36px;border:1px solid var(--border);box-shadow:0 30px 80px #0008}}
+main{flex:1;overflow-y:auto;padding:calc(env(safe-area-inset-top) + 22px) 18px 24px}
+h1{font-size:26px;font-weight:800;letter-spacing:-.02em}
+h2{font-size:15px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin:22px 0 10px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:16px;margin-bottom:12px}
+.muted{color:var(--muted);font-size:14px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 18px;border-radius:14px;font-weight:700;width:100%}
+.btn.p{background:var(--green);color:#06281b}
+.btn.s{border:1px solid var(--border);background:transparent}
+.row{display:flex;gap:10px}
+.row>*{flex:1}
+nav{display:none;border-top:1px solid var(--border);background:#0c1626;padding:6px 6px calc(env(safe-area-inset-bottom) + 6px)}
+nav.on{display:flex}
+nav button{flex:1;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;font-weight:700;color:var(--muted);border-radius:12px}
+nav button svg{width:22px;height:22px}
+nav button.act{color:var(--green)}
+.welcome{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:30px;gap:16px}
+.welcome img{width:96px;height:96px;border-radius:22px}
+.ring{display:block;margin:6px auto 0}
+.big{font-size:54px;font-weight:800;fill:var(--cream)}
+.chip{display:inline-block;padding:4px 12px;border-radius:99px;background:#3DDC9722;color:var(--green);font-weight:700;font-size:13px}
+.bar{height:10px;border-radius:99px;background:#0c1626;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--green);border-radius:99px;transition:width .4s}
+.bar.o i{background:var(--orange)}
+.pil{margin:10px 0}.pil div.t{display:flex;justify-content:space-between;font-size:14px;margin-bottom:5px}
+.fun{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:14px}
+.fun b{min-width:38px;font-size:18px}
+.fun .bar{flex:1}
+.task{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;min-height:64px}
+.task .ck{flex:none;width:28px;height:28px;border-radius:9px;border:2px solid var(--border);display:grid;place-items:center;margin-top:2px}
+.task.done .ck{background:var(--green);border-color:var(--green);color:#06281b}
+.task.done b{text-decoration:line-through;opacity:.6}
+.task small{display:block;color:var(--muted);margin-top:3px;font-size:13px}
+.idea{background:linear-gradient(160deg,#1c3156,#172640);border-color:#3b568a}
+.idea h3{font-size:20px;margin:6px 0}
+.draft{font-size:14px;line-height:1.45;white-space:pre-wrap;margin:8px 0 12px;color:#dfe6f3}
+.rk{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.rk:last-child{border:0}
+.rk .n{width:26px;font-weight:800;color:var(--muted)}
+.rk .s{margin-left:auto;font-weight:800;font-size:18px}
+.rk.me{color:var(--green)}
+.av{width:72px;height:72px;border-radius:50%;background:var(--green);color:#06281b;display:grid;place-items:center;font-size:28px;font-weight:800;margin:0 auto 10px}
+.tg{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:52px;text-align:left}
+.sw{width:46px;height:28px;border-radius:99px;background:var(--border);position:relative;transition:.2s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s}
+.on .sw{background:var(--green)}.on .sw::after{left:21px}
+.toast{position:absolute;left:50%;bottom:90px;transform:translateX(-50%);background:var(--green);color:#06281b;padding:10px 18px;border-radius:99px;font-weight:700;font-size:14px;opacity:0;pointer-events:none;transition:.25s}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+<div id="app">
+  <main id="main"></main>
+  <nav id="nav"></nav>
+  <div class="toast" id="toast"></div>
+</div>
+<script>
+(function(){
+var BASE=[66,48,36,58,62],TARGET=[72,60,56],W=[.3,.2,.2,.15,.15];
+var PNAMES=['Reputación','Presencia en Google','Conversión','Constancia','Atención'];
+var TASKS=[
+ {t:'Pide 6 reseñas esta semana',d:'Reputación 66 → 72. Plantilla de mensaje lista en IA.'},
+ {t:'Completa tu perfil de Google',d:'Presencia 48 → 60. Fotos, horario y servicios.'},
+ {t:'Añade botón de reserva y una oferta',d:'Conversión 36 → 56. Tu mayor fuga está aquí.'}
+];
+var IDEAS=[
+ {n:'Martes de color',d:'Los martes, 15 % en tintes si traen a una amiga. Llena el día más flojo.'},
+ {n:'Cumpleaños en pareja',d:'Ofrece un servicio doble en el mes de su cumpleaños. Fideliza y trae clientas nuevas.'},
+ {n:'Cambio de look del mes',d:'Cada mes, un antes/después de una clienta (con permiso). Contenido que se comparte solo.'}
+];
+var RANK=[['Aurora Estética',82],['Brisa Hair',74],['Café del Puerto',71],['Estudio Nube',63]];
+var DEF={session:false,tab:'home',done:[false,false,false],idea:0,approved:false,conn:[true,true,false,true],collab:null};
+var S=load();
+function load(){try{var r=JSON.parse(localStorage.getItem('growify-app'));if(r)return Object.assign({},DEF,r)}catch(e){}return Object.assign({},DEF)}
+function save(){try{localStorage.setItem('growify-app',JSON.stringify(S))}catch(e){}}
+function pillars(){var p=BASE.slice();for(var i=0;i<3;i++)if(S.done[i])p[i]=TARGET[i];return p}
+function score(){var p=pillars();return Math.round(p.reduce(function(a,v,i){return a+v*W[i]},0))}
+function level(s){return s<30?'Semilla':s<55?'Brote':s<75?'Crecimiento':'Referente'}
+function levelFull(s){return s>=55&&s<75?'Crecimiento':level(s)}
+var IC={
+ home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" fill="currentColor"/>',
+ plan:'<path d="M5 12l5 5L20 6" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+ ia:'<path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z" fill="currentColor"/>',
+ red:'<circle cx="6" cy="8" r="3" fill="currentColor"/><circle cx="18" cy="8" r="3" fill="currentColor"/><circle cx="12" cy="17" r="3" fill="currentColor"/><path d="M6 8h12M6 8l6 9M18 8l-6 9" stroke="currentColor" stroke-width="1.5"/>',
+ perfil:'<circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z" fill="currentColor"/>'
+};
+var TABS=[['home','Inicio'],['plan','Plan'],['ia','IA'],['red','Red'],['perfil','Perfil']];
+var $m=document.getElementById('main'),$n=document.getElementById('nav'),$t=document.getElementById('toast');
+function toast(m){$t.textContent=m;$t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(function(){$t.classList.remove('on')},1800)}
+
+function ring(s){var r=84,c=2*Math.PI*r,o=c*(1-s/100);
+ return '<svg class="ring" width="200" height="200" viewBox="0 0 200 200"><circle cx="100" cy="100" r="'+r+'" fill="none" stroke="#0c1626" stroke-width="16"/><circle cx="100" cy="100" r="'+r+'" fill="none" stroke="#3DDC97" stroke-width="16" stroke-linecap="round" stroke-dasharray="'+c.toFixed(1)+'" stroke-dashoffset="'+o.toFixed(1)+'" transform="rotate(-90 100 100)"/><text x="100" y="116" text-anchor="middle" class="big">'+s+'</text></svg>'}
+
+function home(){var s=score(),p=pillars(),mi=0;p.forEach(function(v,i){if(v<p[mi])mi=i});
+ return '<p class="muted">Hola, Salón Lumi 👋</p><h1>Tu Growify Score</h1>'+
+ '<div class="card" style="text-align:center;margin-top:14px">'+ring(s)+'<div style="margin-top:6px"><span class="chip">Nivel '+levelFull(s)+'</span></div><p class="muted" style="margin-top:10px">'+(S.done.every(Boolean)?'Plan de 30 días completado 🎉':'Completa tu plan para llegar a 63')+'</p></div>'+
+ '<div class="card" style="border-color:var(--orange)"><p class="muted">Tu punto más débil</p><h3 style="margin:4px 0 8px">'+PNAMES[mi]+' · '+p[mi]+'</h3><button class="btn p" data-act="tab" data-v="plan">Ver qué hacer</button></div>'+
+ '<h2>Mapa de fugas</h2><div class="card">'+
+ fun(300,'Te ven',100)+fun(120,'Entran a tu perfil',40)+fun(40,'Te escriben',13)+fun(12,'Reservan',4,true)+
+ '<p class="muted" style="margin-top:8px">Pierdes el 96 % por el camino. Datos de ejemplo.</p></div>'+
+ '<h2>Pilares</h2><div class="card">'+p.map(function(v,i){return '<div class="pil"><div class="t"><span>'+PNAMES[i]+'</span><b>'+v+'</b></div><div class="bar'+(v<50?' o':'')+'"><i style="width:'+v+'%"></i></div></div>'}).join('')+'</div>'}
+function fun(n,l,w,o){return '<div class="fun"><b>'+n+'</b><div class="bar'+(o?' o':'')+'"><i style="width:'+w+'%"></i></div><span class="muted" style="width:110px">'+l+'</span></div>'}
+
+function plan(){var d=S.done.filter(Boolean).length;
+ return '<h1>Plan de 30 días</h1><p class="muted" style="margin:6px 0 14px">'+d+' de 3 hechas · Score '+score()+'</p><div class="bar" style="margin-bottom:16px"><i style="width:'+(d/3*100)+'%"></i></div>'+
+ TASKS.map(function(t,i){return '<button class="card task'+(S.done[i]?' done':'')+'" data-act="task" data-v="'+i+'"><span class="ck">'+(S.done[i]?'✓':'')+'</span><span><b>'+t.t+'</b><small>'+t.d+'</small></span></button>'}).join('')}
+
+var DRAFTS=[
+ ['Responder una reseña','¡Gracias, Marta! Nos alegra mucho que te haya gustado tu cambio de color. Te esperamos pronto 💛 — Equipo Salón Lumi'],
+ ['Publicación de Instagram','Martes de color 🎨 Trae a una amiga y las dos tenéis 15 % en tintes. Reserva con el botón de nuestro perfil.'],
+ ['Pedir una reseña','Hola Laura, ¿qué tal tu nuevo look? Si te ha gustado, nos ayuda muchísimo una reseña de 1 minuto: [enlace]. ¡Gracias!']
+];
+function ia(){var i=IDEAS[S.idea%IDEAS.length];
+ return '<h1>Tu IA creativa</h1><p class="muted" style="margin:6px 0 14px">Entrenada con tu negocio. Ejemplo de demostración.</p>'+
+ '<div class="card idea"><span class="chip">Idea de la semana</span><h3>'+i.n+'</h3><p class="muted">'+i.d+'</p><div class="row" style="margin-top:14px"><button class="btn p" data-act="approve">'+(S.approved?'Aprobada ✓':'Aprobar')+'</button><button class="btn s" data-act="idea">Otra idea</button></div></div>'+
+ '<h2>Textos listos</h2>'+DRAFTS.map(function(d,k){return '<div class="card"><b>'+d[0]+'</b><p class="draft">'+d[1]+'</p><button class="btn s" data-act="copy" data-v="'+k+'">Copiar</button></div>'}).join('')}
+
+function red(){var s=score(),rows=RANK.concat([['Tú · Salón Lumi',s]]).sort(function(a,b){return b[1]-a[1]});
+ var c=S.collab;
+ return '<h1>Growify Social</h1><p class="muted" style="margin:6px 0 14px">Red de negocios con sello de reputación. Datos ficticios.</p>'+
+ '<div class="card">'+rows.map(function(r,i){var me=r[0].indexOf('Tú')===0;return '<div class="rk'+(me?' me':'')+'"><span class="n">'+(i+1)+'</span><span>'+r[0]+'</span><span class="s">'+r[1]+'</span></div>'}).join('')+'</div>'+
+ '<h2>Colaboración</h2><div class="card"><b>Café del Puerto te propone</b><p class="muted" style="margin:6px 0 12px">Cruzar ofertas: 10 % en su café con tu cita, y 10 % en tu servicio con su desayuno.</p>'+
+ (c==null?'<div class="row"><button class="btn p" data-act="collab" data-v="1">Aceptar</button><button class="btn s" data-act="collab" data-v="0">Ahora no</button></div>':'<p class="chip">'+(c?'Aceptada ✓':'Descartada')+'</p> <button class="btn s" style="margin-top:10px" data-act="collab" data-v="x">Deshacer</button>')+'</div>'}
+
+var CONN=['Google Business','Instagram','Web','Reseñas'];
+function perfil(){var s=score();
+ return '<div style="text-align:center"><div class="av">L</div><h1>Salón Lumi</h1><p class="muted">Peluquería · Barcelona (ejemplo)</p><p style="margin-top:10px"><span class="chip">'+levelFull(s)+' · '+s+'</span></p></div>'+
+ '<h2>Conexiones</h2><div class="card">'+CONN.map(function(c,i){return '<button class="tg'+(S.conn[i]?' on':'')+'" data-act="conn" data-v="'+i+'"><span>'+c+'</span><span class="sw"></span></button>'}).join('')+'</div>'+
+ '<h2>Mi plan</h2><div class="card"><b>Pulse</b> · 149 €/mes<p class="muted" style="margin-top:4px">Seguimiento mensual del Score, plan y IA.</p></div>'+
+ '<button class="btn s" data-act="logout" style="margin-top:8px">Salir</button><p class="muted" style="text-align:center;margin-top:14px">Prototipo con datos de ejemplo</p>'}
+
+function welcome(){return '<div class="welcome"><img src="apple-icon.png" alt="Growify"><h1>Growify</h1><p class="muted">Tu Score, tu plan y tu IA en un solo sitio.</p><button class="btn p" data-act="login" style="margin-top:12px">Entrar como Salón Lumi (demo)</button><p class="muted" style="font-size:12px">Prototipo con datos de ejemplo</p></div>'}
+
+function render(keepScroll){var y=$m.scrollTop;
+ if(!S.session){$m.innerHTML=welcome();$n.className='';$n.innerHTML='';return}
+ $m.innerHTML=({home:home,plan:plan,ia:ia,red:red,perfil:perfil}[S.tab]||home)();
+ $n.className='on';
+ $n.innerHTML=TABS.map(function(t){return '<button class="'+(S.tab===t[0]?'act':'')+'" data-act="tab" data-v="'+t[0]+'"><svg viewBox="0 0 24 24">'+IC[t[0]==='perfil'?'perfil':t[0]]+'</svg>'+t[1]+'</button>'}).join('');
+ $m.scrollTop=keepScroll?y:0}
+
+document.getElementById('app').addEventListener('click',function(e){
+ var b=e.target.closest('[data-act]');if(!b)return;var a=b.dataset.act,v=b.dataset.v,keep=true;
+ if(a==='login'){S.session=true;keep=false}
+ else if(a==='logout'){S.session=false;S.tab='home';keep=false}
+ else if(a==='tab'){S.tab=v;keep=false}
+ else if(a==='task'){S.done[+v]=!S.done[+v]}
+ else if(a==='idea'){S.idea++;S.approved=false}
+ else if(a==='approve'){S.approved=!S.approved;if(S.approved)toast('Idea aprobada')}
+ else if(a==='conn'){S.conn[+v]=!S.conn[+v]}
+ else if(a==='collab'){S.collab=v==='x'?null:v==='1';if(v==='1')toast('Colaboración aceptada')}
+ else if(a==='copy'){var t=DRAFTS[+v][1];try{navigator.clipboard.writeText(t).then(function(){toast('Copiado')},function(){toast('No se pudo copiar')})}catch(x){toast('No se pudo copiar')};return}
+ save();render(keep)});
+render();
+})();
+</script>
+</body>
+</html>
